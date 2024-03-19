@@ -5,7 +5,9 @@ const HomeLayout = ({ children }) => {
     return (
         <>
             <NavigationBar />
-            <Styles.LayoutContainer>{children}</Styles.LayoutContainer>
+            <Styles.LayoutContainer>
+                <Styles.LayoutInnerContainer>{children}</Styles.LayoutInnerContainer>
+            </Styles.LayoutContainer>
         </>
     );
 };

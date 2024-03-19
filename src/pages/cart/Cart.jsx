@@ -10,6 +10,7 @@ const CartPage = () => {
                     <Styles.Title>Your Shopping Bag</Styles.Title>
                     <Divider color="black" />
                     @todo add active cart items here
+                    {/* <CheckoutCard /> */}
                 </Styles.BagInnerContainer>
             </Styles.Bag>
             <Styles.Summary>

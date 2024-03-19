@@ -1,6 +1,23 @@
 import * as Styles from './styles';
 import MAIN_IMAGE from '../../images/homeMain.png';
-import { Button, Divider } from '../../components';
+import { Button, Divider, ShopCard } from '../../components';
+
+const MockList_SW = [
+    { price: '66.99', name: 'T-Shirt', isStockAvailable: true },
+    { price: '05.99', name: 'T-Shirt', isStockAvailable: false },
+    { price: '10.00', isStockAvailable: true },
+    { price: '16.59', name: 'T-Shirt', isStockAvailable: false },
+];
+
+const GridItemList = (items) => {
+    return items.map(({ price, name, isStockAvailable }) => {
+        return (
+            <Styles.GridItem>
+                <ShopCard price={price} name={name} isStockAvailable={isStockAvailable} />
+            </Styles.GridItem>
+        );
+    });
+};
 
 const Home = () => {
     return (
@@ -13,10 +30,14 @@ const Home = () => {
                 </Styles.ContentContainer>
             </Styles.HomeImageContainer>
             <Styles.CategorySection>
-                {/* todo add categories as your requirements using map  function dnt duplicate code */}
                 <Styles.Title>SportsWear</Styles.Title>
                 <Divider margin="18px 0" color="#AAD7D9" />
-                Add your Items as required ....
+                <Styles.GridContainer>{GridItemList(MockList_SW)}</Styles.GridContainer>
+            </Styles.CategorySection>
+            <Styles.CategorySection>
+                <Styles.Title>KidsWear</Styles.Title>
+                UP COMING ..............
+                <Divider margin="18px 0 40px 0" color="#AAD7D9" />
             </Styles.CategorySection>
         </div>
     );
