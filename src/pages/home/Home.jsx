@@ -1,6 +1,8 @@
 import * as Styles from './styles';
 import MAIN_IMAGE from '../../images/homeMain.png';
 import { Button, Divider, ShopCard } from '../../components';
+import { useState } from 'react';
+import { Auth } from '../auth';
 
 const MockList_SW = [
     { price: '66.99', name: 'T-Shirt', isStockAvailable: true },
@@ -20,13 +22,18 @@ const GridItemList = (items) => {
 };
 
 const Home = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
+
     return (
         <div>
+            <Auth closeModal={closeModal} isOpen={isOpen} />
             <Styles.HomeImageContainer>
                 <Styles.HomeMainImage src={MAIN_IMAGE} height={300} alt="image" />
                 <Styles.ContentContainer>
                     <Styles.Title>Evaluate Your Wardrobe: Find Your Style with [Clothing Website Name]</Styles.Title>
-                    <Button background="#92c7cf" border="#FFFFFF" label="Start Shopping Now" />
+                    <Button background="#92c7cf" border="#FFFFFF" label="Start Shopping Now" onClick={openModal} />
                 </Styles.ContentContainer>
             </Styles.HomeImageContainer>
             <Styles.CategorySection>

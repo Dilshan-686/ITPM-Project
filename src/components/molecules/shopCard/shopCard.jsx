@@ -14,10 +14,10 @@ const ShopCard = ({ src, name, price, isStockAvailable }) => {
                         <h1>{`${price} $`}</h1>
                     </Styles.ShopCardDetailsItem>
                     <Styles.ShopCardDetailsItem>
-                        <Styles.IconContainer>
+                        <Styles.IconContainer color={isStockAvailable && '#1f7e8d'}>
                             {isStockAvailable ? (
                                 <>
-                                    <Icon name="shopping-bag" /> Add to cart
+                                    <Icon name="shopping-bag" color="#1f7e8d" /> Add to cart
                                 </>
                             ) : (
                                 <>
@@ -26,9 +26,9 @@ const ShopCard = ({ src, name, price, isStockAvailable }) => {
                                 </>
                             )}
                         </Styles.IconContainer>
-                        <Styles.IconContainer>
+                        <Styles.IconContainer color={isStockAvailable && '#1f7e8d'}>
                             <>
-                                <Icon name="star" color={isStockAvailable ? '#92c7cf' : '#3a3a4e'} />
+                                <Icon name="star" color={isStockAvailable ? '#1f7e8d' : '#3a3a4e'} />
                                 {isStockAvailable ? 'Stock available' : 'Out of Stock'}
                             </>
                         </Styles.IconContainer>

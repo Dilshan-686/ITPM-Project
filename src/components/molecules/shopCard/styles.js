@@ -49,4 +49,5 @@ export const IconContainer = styled.div`
     gap: 8px;
     font-weight: 600;
     cursor: pointer;
+    color: ${({ color }) => color ?? '#3a3a4e'};
 `;
