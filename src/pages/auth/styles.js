@@ -20,6 +20,13 @@ export const AuthContainer = styled.div`
         font-weight: 400;
         cursor: pointer;
     }
+
+    h4 {
+        color: #e63333;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
 `;
 
 export const ButtonsContainer = styled.div`
@@ -28,4 +35,10 @@ export const ButtonsContainer = styled.div`
     flex-direction: column;
     margin-top: 12px;
     gap: 8px;
+`;
+
+export const ErrorContainer = styled.div`
+    display: flex;
+    gap: 8px;
+    align-items: center;
 `;
