@@ -7,7 +7,14 @@ const Icon = ({ name, color, onClick, size }) => {
         <Style.IconContainer
             onClick={onClick}
             dangerouslySetInnerHTML={{ __html: getImageString }}
-            style={{ color: color, cursor: 'pointer', width: size, height: size }}
+            style={{
+                color: color,
+                cursor: 'pointer',
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+            }}
         />
     );
 };

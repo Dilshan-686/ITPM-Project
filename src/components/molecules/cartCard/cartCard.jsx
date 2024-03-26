@@ -12,14 +12,18 @@ const CartCard = ({ src }) => {
                     <h5>MockingPrice 4$</h5>
                 </Styles.TextSection>
                 <Styles.ButtonSection>
-                    <Styles.IconButton>
-                        <Icon name="trash" size={18} color="#FEA1A1" />
+                    <Styles.IconButton padding="6px">
+                        <Icon name="trash" size={16} color="#FEA1A1" />
                     </Styles.IconButton>
-                    <Styles.IconButton>
-                        <Icon name="plus" size={18} color="#3a3a4e" />
+                    <Styles.IconButtonList>
+                        <Styles.IconButton padding="1px 4px" border="6px">
+                            <Icon name="plus" size={14} color="#3a3a4e" />
+                        </Styles.IconButton>
                         <h6>12</h6>
-                        <Icon name="minus" size={18} color="#3a3a4e" />
-                    </Styles.IconButton>
+                        <Styles.IconButton padding="1px 4px" border="6px">
+                            <Icon name="minus" size={14} color="#3a3a4e" />
+                        </Styles.IconButton>
+                    </Styles.IconButtonList>
                 </Styles.ButtonSection>
             </Styles.CardItemDetailsSection>
         </Styles.CartCardContainer>
