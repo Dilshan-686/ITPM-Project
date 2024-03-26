@@ -12,6 +12,8 @@ export const LayoutContainer = styled.div`
 `;
 
 export const LayoutInnerContainer = styled.div`
+    display: flex;
+    width: 100%;
     @media (min-width: 1440px) {
         max-width: 1440px;
     }
