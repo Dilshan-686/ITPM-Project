@@ -55,6 +55,8 @@ export const SummaryInnerContainer = styled.div`
     padding: 16px;
     border: 2px solid #aad7d9;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     @media (min-width: 1240px) {
         padding: 36px;
     }
@@ -93,4 +95,37 @@ export const SummaryItemValue = styled.h2`
     text-align: right;
     font-size: 18px;
     opacity: 0.6;
+`;
+
+export const NoData = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    h2 {
+        color: #92c7cf;
+        margin: 0;
+    }
+`;
+
+export const DetailsSection = styled.div`
+    width: 100%;
+`;
+
+export const ButtonSection = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+        color: #ffffff;
+    }
+`;
+
+export const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 `;

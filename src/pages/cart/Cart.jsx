@@ -1,6 +1,6 @@
 import * as Styles from './styles';
 import { useEffect, useState } from 'react';
-import { CartCard, Divider } from '../../components';
+import { Button, CartCard, Divider, Icon } from '../../components';
 import { cartStorageService } from '../../shared';
 
 // for now declare TAX as constraint
@@ -12,9 +12,7 @@ const CartPage = () => {
     // initial load data
     useEffect(() => {
         const useItems = cartStorageService.getCartItems();
-        if (useItems?.length) {
-            setCartItems(useItems);
-        }
+        setCartItems(useItems);
         setIsStorageUpdate(false);
     }, [isStorageUpdate, setIsStorageUpdate]);
 
@@ -111,25 +109,47 @@ const CartPage = () => {
                 <Styles.BagInnerContainer>
                     <Styles.Title>Your Shopping Bag</Styles.Title>
                     <Divider margin="20px 0" color="#aad7d9" />
-                    <Styles.CardListContainer>{renderCartItemList()}</Styles.CardListContainer>
+                    <Styles.CardListContainer>
+                        {cartItems?.length ? (
+                            renderCartItemList()
+                        ) : (
+                            <Styles.NoData>
+                                <Icon name="shopping-cart" size={64} color="#92c7cf" />
+                                <h2>No items in your cart</h2>
+                                <h2>Keep Shopping</h2>
+                            </Styles.NoData>
+                        )}
+                    </Styles.CardListContainer>
                 </Styles.BagInnerContainer>
             </Styles.Bag>
             <Styles.Summary>
                 <Styles.SummaryInnerContainer>
                     <Styles.Title> Purchasing Summary</Styles.Title>
                     <Divider margin="20px 0" color="#aad7d9" />
-                    <Styles.SummaryItemContainer>
-                        <Styles.SummaryItemTitle>Subtotal</Styles.SummaryItemTitle>
-                        <Styles.SummaryItemValue>{getSubTotal()}$</Styles.SummaryItemValue>
-                    </Styles.SummaryItemContainer>
-                    <Styles.SummaryItemContainer>
-                        <Styles.SummaryItemTitle>Tax and other fee</Styles.SummaryItemTitle>
-                        <Styles.SummaryItemValue>{getTax()}$</Styles.SummaryItemValue>
-                    </Styles.SummaryItemContainer>
-                    <Styles.SummaryItemContainer padding="36px">
-                        <Styles.SummaryItemTitle>Purchasing Total</Styles.SummaryItemTitle>
-                        <Styles.SummaryItemValue>{getPurchasingTotal()}$</Styles.SummaryItemValue>
-                    </Styles.SummaryItemContainer>
+                    <Styles.Content>
+                        <Styles.DetailsSection>
+                            <Styles.SummaryItemContainer>
+                                <Styles.SummaryItemTitle>Subtotal</Styles.SummaryItemTitle>
+                                <Styles.SummaryItemValue>{getSubTotal()}$</Styles.SummaryItemValue>
+                            </Styles.SummaryItemContainer>
+                            <Styles.SummaryItemContainer>
+                                <Styles.SummaryItemTitle>Tax and other fee</Styles.SummaryItemTitle>
+                                <Styles.SummaryItemValue>{getTax()}$</Styles.SummaryItemValue>
+                            </Styles.SummaryItemContainer>
+                            <Styles.SummaryItemContainer padding="36px">
+                                <Styles.SummaryItemTitle>Purchasing Total</Styles.SummaryItemTitle>
+                                <Styles.SummaryItemValue>{getPurchasingTotal()}$</Styles.SummaryItemValue>
+                            </Styles.SummaryItemContainer>
+                        </Styles.DetailsSection>
+                        <Styles.ButtonSection>
+                            <Button
+                                onClick={() => {}}
+                                background="#aad7d9"
+                                border="#92c7cf"
+                                label="Proceed To Checkout"
+                            />
+                        </Styles.ButtonSection>
+                    </Styles.Content>
                 </Styles.SummaryInnerContainer>
             </Styles.Summary>
         </Styles.CartPageContainer>
