@@ -2,7 +2,7 @@ import * as Style from './styles';
 import feather from 'feather-icons';
 
 const Icon = ({ name, color, onClick, size }) => {
-    const getImageString = feather.toSvg(name ?? 'circle', { width: size, height: size });
+    const getImageString = feather.toSvg(name ?? 'circle', { width: size ?? '24px', height: size ?? '24px' });
     return (
         <Style.IconContainer
             onClick={onClick}

@@ -3,19 +3,68 @@ import MAIN_IMAGE from '../../images/homeMain.png';
 import { Button, Divider, ShopCard } from '../../components';
 import { useState } from 'react';
 import { Auth } from '../auth';
+import { cartStorageService } from '../../shared';
 
 const MockList_SW = [
-    { price: '66.99', name: 'T-Shirt', isStockAvailable: true },
-    { price: '05.99', name: 'T-Shirt', isStockAvailable: false },
-    { price: '10.00', isStockAvailable: true },
-    { price: '16.59', name: 'T-Shirt', isStockAvailable: false },
+    { id: '1', price: '66.99', name: 'T-Shirt', isStockAvailable: true, availableStock: 12 },
+    { id: '2', price: '05.99', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
+    { id: '3', price: '10.00', isStockAvailable: true, availableStock: 12 },
+    { id: '4', price: '16.59', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
 ];
 
+const handleShopCardOnClick = (id, price, name, availableStock) => {
+    // in cart items
+    const cartItems = cartStorageService.getCartItems();
+    // check same item is there
+    const existItem = cartItems.filter((item) => item.id === id);
+
+    // existing item
+    if (existItem[0]?.id) {
+        const updateCartItems = cartItems.map((item) => {
+            if (item.id === id) {
+                return {
+                    id,
+                    price,
+                    name,
+                    availableStock,
+                    quantity: (parseInt(item.quantity) + 1).toString(),
+                };
+            } else {
+                return {
+                    id: item.id,
+                    price: item.price,
+                    name: item.name,
+                    availableStock: item.availableStock,
+                    quantity: item.quantity,
+                };
+            }
+        });
+        cartStorageService.setCartItems(updateCartItems);
+    } else {
+        // new item
+        cartStorageService.setCartItems([
+            ...cartItems,
+            {
+                id,
+                price,
+                name,
+                availableStock,
+                quantity: 1,
+            },
+        ]);
+    }
+};
+
 const GridItemList = (items) => {
-    return items.map(({ price, name, isStockAvailable }) => {
+    return items.map(({ price, name, isStockAvailable, id, availableStock }) => {
         return (
-            <Styles.GridItem>
-                <ShopCard price={price} name={name} isStockAvailable={isStockAvailable} />
+            <Styles.GridItem key={id}>
+                <ShopCard
+                    price={price}
+                    name={name}
+                    isStockAvailable={isStockAvailable}
+                    onClick={() => handleShopCardOnClick(id, price, name, availableStock)}
+                />
             </Styles.GridItem>
         );
     });
