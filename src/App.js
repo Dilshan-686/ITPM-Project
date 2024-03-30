@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomeLayout from './layout';
 import { HomePage } from './pages/home';
 import { Cart } from './pages/cart';
+import { PaymentResult } from './pages/paymentResult';
 
 function App() {
     return (
@@ -24,6 +25,22 @@ function App() {
                             </HomeLayout>
                         }
                         path="/cart"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <PaymentResult />
+                            </HomeLayout>
+                        }
+                        path="cart/checkout/success"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <PaymentResult />
+                            </HomeLayout>
+                        }
+                        path="cart/checkout/unsuccess"
                     />
                 </Routes>
             </BrowserRouter>

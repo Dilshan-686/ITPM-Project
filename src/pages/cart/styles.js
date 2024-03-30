@@ -119,7 +119,7 @@ export const ButtonSection = styled.div`
     justify-content: center;
     align-items: center;
     button {
-        color: #ffffff;
+        color: #3a3a4e;
     }
 `;
 

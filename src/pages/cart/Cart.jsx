@@ -2,6 +2,7 @@ import * as Styles from './styles';
 import { useEffect, useState } from 'react';
 import { Button, CartCard, Divider, Icon } from '../../components';
 import { cartStorageService } from '../../shared';
+import { Checkout } from '../../services';
 
 // for now declare TAX as constraint
 const TAX_RATE = 0.08;
@@ -21,7 +22,7 @@ const CartPage = () => {
     const getSubTotal = () => {
         let sub = 0;
         cartItems.forEach(({ price, quantity }) => {
-            sub += parseInt(price) * quantity;
+            sub += parseFloat(price).toFixed(2) * quantity;
         });
         return sub;
     };
@@ -33,7 +34,8 @@ const CartPage = () => {
 
     //full bill
     const getPurchasingTotal = () => {
-        return Math.round(getSubTotal() + getTax() * 100) / 100;
+        const total = getSubTotal() + getTax();
+        return Math.round(total * 100) / 100;
     };
 
     //remove item by id
@@ -143,10 +145,15 @@ const CartPage = () => {
                         </Styles.DetailsSection>
                         <Styles.ButtonSection>
                             <Button
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    const response = await Checkout(getPurchasingTotal());
+                                    console.log(response);
+                                    window.location.replace(response.data);
+                                }}
                                 background="#aad7d9"
                                 border="#92c7cf"
-                                label="Proceed To Checkout"
+                                disabled={getPurchasingTotal() === 0}
+                                label={getPurchasingTotal() === 0 ? 'No Items Selected' : 'Proceed To Checkout'}
                             />
                         </Styles.ButtonSection>
                     </Styles.Content>
