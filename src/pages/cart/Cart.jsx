@@ -9,6 +9,7 @@ const TAX_RATE = 0.08;
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
+    const [isLoadingPurchase, setIsLoadingPurchase] = useState(false);
     const [isStorageUpdate, setIsStorageUpdate] = useState(false);
     // initial load data
     useEffect(() => {
@@ -24,17 +25,17 @@ const CartPage = () => {
         cartItems.forEach(({ price, quantity }) => {
             sub += parseFloat(price).toFixed(2) * quantity;
         });
-        return sub;
+        return parseFloat(sub).toFixed(2);
     };
 
     //tax
     const getTax = () => {
-        return Math.round(getSubTotal() * TAX_RATE * 100) / 100;
+        return parseFloat(Math.round(getSubTotal() * TAX_RATE * 100) / 100).toFixed(2);
     };
 
     //full bill
     const getPurchasingTotal = () => {
-        const total = getSubTotal() + getTax();
+        const total = parseFloat(getSubTotal()) + parseFloat(getTax());
         return Math.round(total * 100) / 100;
     };
 
@@ -145,15 +146,28 @@ const CartPage = () => {
                         </Styles.DetailsSection>
                         <Styles.ButtonSection>
                             <Button
+                                isLoading={isLoadingPurchase}
                                 onClick={async () => {
+                                    setIsLoadingPurchase(true);
                                     const response = await Checkout(getPurchasingTotal());
                                     console.log(response);
                                     window.location.replace(response.data);
+                                    setIsLoadingPurchase(false);
                                 }}
                                 background="#aad7d9"
                                 border="#92c7cf"
                                 disabled={getPurchasingTotal() === 0}
                                 label={getPurchasingTotal() === 0 ? 'No Items Selected' : 'Proceed To Checkout'}
+                            />
+                            <Button
+                                onClick={() => {
+                                    cartStorageService.clearCart();
+                                    setIsStorageUpdate(true);
+                                }}
+                                background="#ffffff"
+                                border="#92c7cf"
+                                disabled={getPurchasingTotal() === 0}
+                                label={getPurchasingTotal() === 0 ? 'No Items To Clear' : 'Clear cart'}
                             />
                         </Styles.ButtonSection>
                     </Styles.Content>

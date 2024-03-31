@@ -116,6 +116,8 @@ export const DetailsSection = styled.div`
 export const ButtonSection = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 12px;
     justify-content: center;
     align-items: center;
     button {

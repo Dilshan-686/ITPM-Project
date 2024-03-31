@@ -1,6 +1,7 @@
+import Spinner from '../spinner/spinner';
 import * as Styles from './styles';
 
-const Button = ({ width, height, background, border, label, onClick, disabled }) => {
+const Button = ({ width, height, background, border, label, onClick, disabled, isLoading }) => {
     return (
         <Styles.ButtonContainer
             heigh={height}
@@ -9,7 +10,10 @@ const Button = ({ width, height, background, border, label, onClick, disabled })
             border={!disabled ? border : '#bababa'}
             onClick={onClick}
         >
-            <Styles.Button disabled={disabled}>{label}</Styles.Button>
+            <Styles.Button disabled={disabled}>
+                {isLoading && !disabled ? <Spinner color="#3a3a4e" /> : null}
+                {label}
+            </Styles.Button>
         </Styles.ButtonContainer>
     );
 };

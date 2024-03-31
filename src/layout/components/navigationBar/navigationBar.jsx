@@ -39,10 +39,22 @@ const NavigationBar = () => {
                     >
                         Home
                     </Styles.NavItem>
-                    <Styles.NavItem>Cart</Styles.NavItem>
+                    <Styles.NavItem
+                        onClick={() => {
+                            onClickHandleNavigate('/cart');
+                        }}
+                    >
+                        Cart
+                    </Styles.NavItem>
                     <Styles.NavItem>About</Styles.NavItem>
                     <Styles.NavItem>Contact</Styles.NavItem>
-                    <Styles.NavItem>Services</Styles.NavItem>
+                    <Styles.NavItem
+                        onClick={() => {
+                            onClickHandleNavigate('/payments/user-history');
+                        }}
+                    >
+                        Payment History
+                    </Styles.NavItem>
                 </Styles.NavItemListContainer>
                 <Styles.NavBarRightIconList>
                     <Icon

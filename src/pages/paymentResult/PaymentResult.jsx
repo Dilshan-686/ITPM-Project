@@ -1,10 +1,22 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Icon } from '../../components';
 import * as Styles from './styles';
+import React, { useEffect } from 'react';
+import { savePaymentHistory } from '../../services';
+import { cartStorageService } from '../../shared';
 
 const PaymentResult = () => {
     const navigate = useNavigate();
+    const params = useParams();
     const isSuccuss = window.location.pathname.includes('/cart/checkout/success');
+
+    useEffect(() => {
+        // save purchase history to generate report
+        if (cartStorageService.getCartItems().length > 0) {
+            savePaymentHistory(params.price);
+            cartStorageService.clearCart();
+        }
+    }, [params]);
 
     return (
         <Styles.PaymentResultContainer isSuccuss={isSuccuss}>

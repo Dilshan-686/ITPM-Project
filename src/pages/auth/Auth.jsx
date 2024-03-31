@@ -7,10 +7,20 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Auth = ({ isOpen, closeModal }) => {
     const [isSignIn, setIsSignIn] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPW, setConfirmPW] = useState('');
     const [errorMsg, setErrorMsg] = useState(null);
+
+    //localhost too fast loading state not visible @temp use loading state set to 1 sec
+    useEffect(() => {
+        if (isLoading) {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1000);
+        }
+    }, [isLoading]);
 
     //validation
     useEffect(() => {
@@ -32,10 +42,12 @@ const Auth = ({ isOpen, closeModal }) => {
     }, [username, password, confirmPW, isSignIn]);
 
     const handleSignUp = () => {
+        setIsLoading(true);
         SignUp(uuidv4(), username, password);
     };
 
     const handleSignIn = () => {
+        setIsLoading(true);
         SignIN(username, password);
     };
 
@@ -82,6 +94,7 @@ const Auth = ({ isOpen, closeModal }) => {
                 ) : null}
                 <Styles.ButtonsContainer>
                     <Button
+                        isLoading={isLoading}
                         onClick={isSignIn ? handleSignIn : handleSignUp}
                         background="#aad7d9"
                         border="#92c7cf"

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
     height: ${({ height }) => height ?? '50px'};
     width: ${({ width }) => width ?? '200px'};
     border-radius: 8px;
@@ -24,4 +26,8 @@ export const Button = styled.button`
     background: transparent;
     border: none;
     padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
 `;
