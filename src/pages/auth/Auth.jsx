@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import * as Styles from './styles';
-import { Button, Icon, Input } from '../../components';
-import Modal from '../../components/molecules/Modal/modal';
+import { Button, Input } from '../../components';
 import { SignIN, SignUp } from '../../services';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../../shared';
+import { toast } from 'react-toastify';
 
-const Auth = ({ isOpen, closeModal }) => {
+const Auth = () => {
+    const navigate = useNavigate();
     const [isSignIn, setIsSignIn] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [username, setUserName] = useState('');
@@ -42,17 +45,37 @@ const Auth = ({ isOpen, closeModal }) => {
     }, [username, password, confirmPW, isSignIn]);
 
     const handleSignUp = () => {
-        setIsLoading(true);
-        SignUp(uuidv4(), username, password);
+        if (!errorMsg) {
+            setIsLoading(true);
+            SignUp(uuidv4(), username, password);
+        } else {
+            toast.error(errorMsg);
+        }
     };
 
-    const handleSignIn = () => {
+    const handleSignIn = async () => {
         setIsLoading(true);
-        SignIN(username, password);
+        if (!errorMsg) {
+            const response = await SignIN(username, password);
+            console.log(response);
+            if (response?.data?.error) {
+                toast.error(response.data.error);
+            } else if (response?.data?.accessToken) {
+                toast.success(response.data?.message);
+                navigate('/');
+            }
+        } else {
+            toast.error(errorMsg);
+        }
     };
+
+    if (authService.authGuard()) {
+        navigate('/');
+        return null;
+    }
 
     return (
-        <Modal isOpen={isOpen} onClose={closeModal}>
+        <Styles.AuthPage>
             <Styles.AuthContainer>
                 <h1>{isSignIn ? 'Sign in' : 'Sign up'}</h1>
                 <h3
@@ -87,11 +110,7 @@ const Auth = ({ isOpen, closeModal }) => {
                         }}
                     />
                 ) : null}
-                {errorMsg ? (
-                    <Styles.ErrorContainer>
-                        <Icon name="alert-circle" color="#e63333" /> <h4>{errorMsg}</h4>
-                    </Styles.ErrorContainer>
-                ) : null}
+
                 <Styles.ButtonsContainer>
                     <Button
                         isLoading={isLoading}
@@ -100,10 +119,16 @@ const Auth = ({ isOpen, closeModal }) => {
                         border="#92c7cf"
                         label={isSignIn ? 'Sign in' : 'Sign up'}
                     />
-                    <Button onClick={closeModal} border="#92c7cf" label="Close" />
+                    <Button
+                        onClick={() => {
+                            navigate('/');
+                        }}
+                        border="#92c7cf"
+                        label="Back"
+                    />
                 </Styles.ButtonsContainer>
             </Styles.AuthContainer>
-        </Modal>
+        </Styles.AuthPage>
     );
 };
 

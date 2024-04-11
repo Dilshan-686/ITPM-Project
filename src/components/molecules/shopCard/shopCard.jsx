@@ -2,9 +2,17 @@ import * as Styles from './styles';
 import DEFAULT_IMAGE from './default.jpg';
 import { Divider, Icon } from '../../atoms';
 
-const ShopCard = ({ src, name, price, isStockAvailable, onClick }) => {
+const ShopCard = ({ src, name, price, isStockAvailable, onClick, isActive }) => {
     return (
         <Styles.ShopCardContainer onClick={onClick}>
+            {isActive && (
+                <>
+                    <Styles.Icon>
+                        <Icon name="check-square" size={24} color="white" />
+                    </Styles.Icon>
+                    <Styles.InCartIcon />
+                </>
+            )}
             <Styles.ShopCardInnerContainer>
                 <Styles.ShopCardImage src={src || DEFAULT_IMAGE} />
                 <h2> {name ? name : 'Name tag Available'}</h2>

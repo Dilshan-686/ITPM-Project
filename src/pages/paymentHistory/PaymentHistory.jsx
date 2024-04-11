@@ -6,23 +6,31 @@ import ReceiptList from './ReceiptList';
 import { useEffect, useState } from 'react';
 import { Icon, Spinner } from '../../components';
 import { getPaymentHistory } from '../../services';
+import { useAuthGuard } from '../../hooks/useAuthGuard';
+import { authService } from '../../shared';
 
 const PaymentHistory = () => {
+    useAuthGuard();
     const [userHistory, setUserHistory] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const doc = new jsPDF();
 
     useEffect(() => {
-        setIsLoading(true);
-        getPaymentHistory()
-            .then((data) => {
-                setUserHistory(data);
-                setIsLoading(false);
-            })
-            .catch((error) => console.error(error));
+        if (authService.authGuard()) {
+            setIsLoading(true);
+            getPaymentHistory()
+                .then((data) => {
+                    setUserHistory(data);
+                    setIsLoading(false);
+                })
+                .catch((error) => console.error(error));
+        }
     }, []);
 
+    if (!authService.authGuard()) {
+        return null;
+    }
     return (
         <Styles.PaymentHistoryPageContainer>
             <Styles.TitleContainer>

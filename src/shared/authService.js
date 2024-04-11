@@ -9,3 +9,7 @@ export const getAccessToken = (token) => {
 export const authGuard = () => {
     return localStorage.getItem('accessToken') ? true : false;
 };
+
+export const clearAuth = () => {
+    return localStorage.removeItem('accessToken');
+};

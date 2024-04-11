@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const ShopCardContainer = styled.div`
+    position: relative;
     border: 2px solid #e1afd1;
     height: fit-content;
     width: 100%;
@@ -50,4 +51,23 @@ export const IconContainer = styled.div`
     font-weight: 600;
     cursor: pointer;
     color: ${({ color }) => color ?? '#3a3a4e'};
+`;
+
+export const InCartIcon = styled.div`
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 0px solid transparent;
+    border-left: 60px solid #e1afd1;
+    border-bottom: 60px solid transparent;
+`;
+
+export const Icon = styled.div`
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 2;
 `;

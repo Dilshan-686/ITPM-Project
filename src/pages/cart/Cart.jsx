@@ -1,13 +1,15 @@
 import * as Styles from './styles';
 import { useEffect, useState } from 'react';
 import { Button, CartCard, Divider, Icon } from '../../components';
-import { cartStorageService } from '../../shared';
+import { authService, cartStorageService } from '../../shared';
 import { Checkout } from '../../services';
+import { useAuthGuard } from '../../hooks/useAuthGuard';
 
 // for now declare TAX as constraint
 const TAX_RATE = 0.08;
 
 const CartPage = () => {
+    useAuthGuard();
     const [cartItems, setCartItems] = useState([]);
     const [isLoadingPurchase, setIsLoadingPurchase] = useState(false);
     const [isStorageUpdate, setIsStorageUpdate] = useState(false);
@@ -86,6 +88,10 @@ const CartPage = () => {
         cartStorageService.setCartItems(updatedItems);
         setIsStorageUpdate(true);
     };
+
+    if (!authService.authGuard()) {
+        return null;
+    }
 
     //jsx helper
     //card list

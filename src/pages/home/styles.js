@@ -50,7 +50,7 @@ export const Title = styled.h1`
 
 export const CategorySection = styled.div`
     height: fit-content;
-    margin: 40px 0 0 0;
+    margin: 40px 0 40px 0;
 `;
 
 // SportsWear

@@ -1,9 +1,9 @@
 import * as Styles from './styles';
 import MAIN_IMAGE from '../../images/homeMain.png';
 import { Button, Divider, ShopCard } from '../../components';
-import { useState } from 'react';
-import { Auth } from '../auth';
-import { cartStorageService } from '../../shared';
+import { authService, cartStorageService } from '../../shared';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const MockList_SW = [
     { id: '1', price: '66.99', name: 'T-Shirt', isStockAvailable: true, availableStock: 12 },
@@ -55,34 +55,56 @@ const handleShopCardOnClick = (id, price, name, availableStock) => {
     }
 };
 
-const GridItemList = (items) => {
-    return items.map(({ price, name, isStockAvailable, id, availableStock }) => {
-        return (
-            <Styles.GridItem key={id}>
-                <ShopCard
-                    price={price}
-                    name={name}
-                    isStockAvailable={isStockAvailable}
-                    onClick={() => handleShopCardOnClick(id, price, name, availableStock)}
-                />
-            </Styles.GridItem>
-        );
-    });
-};
-
 const Home = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const navigate = useNavigate();
+    const [isUpdateCart, setIsUpdateCart] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        if (isUpdateCart) {
+            setIsUpdateCart(false);
+            console.log(cartItems);
+            setCartItems(cartStorageService.getCartItems());
+        }
+    }, [cartItems, isUpdateCart]);
+
+    const GridItemList = (items) => {
+        return items.map(({ price, name, isStockAvailable, id, availableStock }) => {
+            return (
+                <Styles.GridItem key={id}>
+                    <ShopCard
+                        price={price}
+                        name={name}
+                        isStockAvailable={isStockAvailable}
+                        isActive={cartItems.find((item) => item?.id === id)}
+                        onClick={() => {
+                            handleShopCardOnClick(id, price, name, availableStock);
+                            setIsUpdateCart(true);
+                        }}
+                    />
+                </Styles.GridItem>
+            );
+        });
+    };
 
     return (
         <div>
-            <Auth closeModal={closeModal} isOpen={isOpen} />
             <Styles.HomeImageContainer>
                 <Styles.HomeMainImage src={MAIN_IMAGE} height={300} alt="image" />
                 <Styles.ContentContainer>
                     <Styles.Title>Evaluate Your Wardrobe: Find Your Style with [Clothing Website Name]</Styles.Title>
-                    <Button background="#92c7cf" border="#FFFFFF" label="Start Shopping Now" onClick={openModal} />
+                    <Button
+                        background="#92c7cf"
+                        border="#FFFFFF"
+                        label="Start Shopping Now"
+                        onClick={() => {
+                            if (authService.authGuard()) {
+                                navigate('/cart');
+                            } else {
+                                navigate('/auth');
+                            }
+                        }}
+                    />
                 </Styles.ContentContainer>
             </Styles.HomeImageContainer>
             <Styles.CategorySection>
@@ -92,8 +114,8 @@ const Home = () => {
             </Styles.CategorySection>
             <Styles.CategorySection>
                 <Styles.Title>KidsWear</Styles.Title>
-                UP COMING ..............
                 <Divider margin="18px 0 40px 0" color="#AAD7D9" />
+                <Styles.GridContainer>{GridItemList(MockList_SW)}</Styles.GridContainer>
             </Styles.CategorySection>
         </div>
     );
