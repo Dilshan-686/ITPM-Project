@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomeLayout from './layout';
 import { HomePage } from './pages/home';
 import { Cart } from './pages/cart';
+import { PaymentResult } from './pages/paymentResult';
+import { PaymentHistory } from './pages/paymentHistory';
+import { Auth } from './pages/auth';
 
 function App() {
     return (
@@ -20,10 +23,42 @@ function App() {
                     <Route
                         element={
                             <HomeLayout>
+                                <Auth />
+                            </HomeLayout>
+                        }
+                        path="/auth"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
                                 <Cart />
                             </HomeLayout>
                         }
                         path="/cart"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <PaymentResult />
+                            </HomeLayout>
+                        }
+                        path="/cart/checkout/success/:price"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <PaymentResult />
+                            </HomeLayout>
+                        }
+                        path="/cart/checkout/unsuccess/:price"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <PaymentHistory />
+                            </HomeLayout>
+                        }
+                        path="/payments/user-history"
                     />
                 </Routes>
             </BrowserRouter>

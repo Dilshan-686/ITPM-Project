@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 
+export const AuthPage = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+`;
+
 export const AuthContainer = styled.div`
+    margin-top: 40px;
     display: flex;
     gap: 16px;
     flex-direction: column;
     min-height: 300px;
     padding: 22px 42px;
-
+    border: 4px solid #e1fdfe;
+    background: #edfcfd;
+    border-radius: 12px;
     h1 {
         color: #3a3a4e;
         margin: 0;

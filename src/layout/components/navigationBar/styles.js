@@ -22,7 +22,7 @@ export const NavBarWrapper = styled.nav`
 
 export const NavItem = styled.div`
     cursor: pointer;
-
+    border-bottom: ${({ isActive }) => (isActive ? '2px solid #92c7cf' : 'none')};
     @media (max-width: 768px) {
         margin: ${({ margin }) => margin};
     }
@@ -64,5 +64,25 @@ export const NavBarRightIconList = styled.div`
     gap: 12px;
     @media (max-width: 768px) {
         display: none;
+    }
+`;
+
+export const IconImage = styled.img`
+    width: 24p;
+    height: 24px;
+    border-radius: 50%;
+`;
+
+export const ImageIconContainer = styled.div`
+    display: none;
+    @media (max-width: 768px) {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        left: 20px;
+        top: 18px;
+        cursor: pointer;
+        height: 24px;
+        width: 24px;
     }
 `;
