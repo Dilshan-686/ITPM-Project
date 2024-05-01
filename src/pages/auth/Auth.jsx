@@ -44,13 +44,22 @@ const Auth = () => {
         }
     }, [username, password, confirmPW, isSignIn]);
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
+        setIsLoading(true);
         if (!errorMsg) {
-            setIsLoading(true);
-            SignUp(uuidv4(), username, password);
+            const response = await SignUp(uuidv4(), username, password);
+            if (response?.data?.error) {
+                toast.error(response.data.error);
+            } else if (response?.data?.message) {
+                toast.success(response.data?.message);
+                //clear ps fields
+                setConfirmPW('');
+                setIsSignIn(true);
+            }
         } else {
             toast.error(errorMsg);
         }
+        setIsLoading(false);
     };
 
     const handleSignIn = async () => {
@@ -67,6 +76,7 @@ const Auth = () => {
         } else {
             toast.error(errorMsg);
         }
+        setIsLoading(false);
     };
 
     if (authService.authGuard()) {

@@ -49,33 +49,64 @@ const NavigationBar = () => {
                     >
                         Home
                     </Styles.NavItem>
-                    <Styles.NavItem
-                        isActive={path.pathname === '/cart'}
-                        onClick={() => {
-                            onClickHandleNavigate('/cart');
-                        }}
-                    >
-                        Cart
-                    </Styles.NavItem>
-                    <Styles.NavItem
-                        isActive={path.pathname === '/payments/user-history'}
-                        onClick={() => {
-                            onClickHandleNavigate('/payments/user-history');
-                        }}
-                    >
-                        Payment History
-                    </Styles.NavItem>
-                    <Styles.NavItem isActive={path.pathname === '/about'}>About</Styles.NavItem>
-                    <Styles.NavItem isActive={path.pathname === '/contact'}>Contact Us</Styles.NavItem>
+                    {!auth && (
+                        <Styles.NavItem
+                            isActive={path.pathname === '/auth'}
+                            onClick={() => {
+                                onClickHandleNavigate('/auth');
+                            }}
+                        >
+                            Join Us
+                        </Styles.NavItem>
+                    )}
+                    {auth && (
+                        <>
+                            <Styles.NavItem
+                                isActive={path.pathname === '/cart'}
+                                onClick={() => {
+                                    onClickHandleNavigate('/cart');
+                                }}
+                            >
+                                Cart
+                            </Styles.NavItem>
+                            <Styles.NavItem
+                                isActive={path.pathname === '/payments/user-history'}
+                                onClick={() => {
+                                    onClickHandleNavigate('/payments/user-history');
+                                }}
+                            >
+                                Payment History
+                            </Styles.NavItem>
+                            <Styles.NavItem
+                                isActive={path.pathname === '/profile'}
+                                onClick={() => {
+                                    onClickHandleNavigate('/profile');
+                                }}
+                            >
+                                Profile
+                            </Styles.NavItem>
+                            <Styles.NavItem
+                                onClick={() => {
+                                    authService.clearAuth();
+                                    cartStorageService.clearCart();
+                                    onClickHandleNavigate('/');
+                                }}
+                            >
+                                Sign out
+                            </Styles.NavItem>
+                        </>
+                    )}
                 </Styles.NavItemListContainer>
                 <Styles.NavBarRightIconList>
-                    <Icon
-                        name="shopping-cart"
-                        color="#3a3a4e"
-                        onClick={() => {
-                            onClickHandleNavigate('/cart');
-                        }}
-                    />
+                    {auth && (
+                        <Icon
+                            name="shopping-cart"
+                            color="#3a3a4e"
+                            onClick={() => {
+                                onClickHandleNavigate('/cart');
+                            }}
+                        />
+                    )}
 
                     {!auth ? (
                         <Icon name="log-in" color="#AAD7D9" onClick={() => onClickHandleNavigate('/auth')} />
