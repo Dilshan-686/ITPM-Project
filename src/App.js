@@ -6,6 +6,7 @@ import { Cart } from './pages/cart';
 import { PaymentResult } from './pages/paymentResult';
 import { PaymentHistory } from './pages/paymentHistory';
 import { Auth } from './pages/auth';
+import { UserProfile } from './pages/userProfile';
 
 function App() {
     return (
@@ -35,6 +36,14 @@ function App() {
                             </HomeLayout>
                         }
                         path="/cart"
+                    />
+                    <Route
+                        element={
+                            <HomeLayout>
+                                <UserProfile />
+                            </HomeLayout>
+                        }
+                        path="/profile"
                     />
                     <Route
                         element={

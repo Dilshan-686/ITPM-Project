@@ -3,3 +3,5 @@ export { default as SignIN } from './signIn';
 export { default as Checkout } from './payment';
 export { default as savePaymentHistory } from './savePaymentHistory';
 export { default as getPaymentHistory } from './getPaymentHistory';
+export { default as getUser } from './getUser';
+export { default as callUserDangerZone } from './callUserDangerZone';

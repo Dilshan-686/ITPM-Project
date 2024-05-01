@@ -12,7 +12,7 @@ const Button = ({ width, height, background, border, label, onClick, disabled, i
         >
             <Styles.Button disabled={disabled}>
                 {isLoading && !disabled ? <Spinner color="#3a3a4e" /> : null}
-                {label}
+                <label>{label}</label>
             </Styles.Button>
         </Styles.ButtonContainer>
     );
