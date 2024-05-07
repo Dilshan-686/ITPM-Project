@@ -73,3 +73,13 @@ export const GridItem = styled.div`
     // min-height: 460px;
     background: yellow;
 `;
+
+export const Chat = styled.div`
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff2d7;
+    padding: 8px;
+    border: 4px solid #f8c794;
+`;
