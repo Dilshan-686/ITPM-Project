@@ -5,13 +5,14 @@ import { authService, cartStorageService } from '../../shared';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ChatbotWindow from './ChatBox';
+import { getProduct } from '../../services';
 
-const MockList_SW = [
-    { id: '1', price: '66.99', name: 'T-Shirt', isStockAvailable: true, availableStock: 12 },
-    { id: '2', price: '05.99', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
-    { id: '3', price: '10.00', isStockAvailable: true, availableStock: 12 },
-    { id: '4', price: '16.59', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
-];
+// const MockList_SW = [
+//     { id: '1', price: '66.99', name: 'T-Shirt', isStockAvailable: true, availableStock: 12 },
+//     { id: '2', price: '05.99', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
+//     { id: '3', price: '10.00', isStockAvailable: true, availableStock: 12 },
+//     { id: '4', price: '16.59', name: 'T-Shirt', isStockAvailable: false, availableStock: 0 },
+// ];
 
 const handleShopCardOnClick = (id, price, name, availableStock) => {
     // in cart items
@@ -60,6 +61,8 @@ const Home = () => {
     const navigate = useNavigate();
     const [isUpdateCart, setIsUpdateCart] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [productsTypes, setProductsTypes] = useState([]);
 
     useEffect(() => {
         if (isUpdateCart) {
@@ -68,6 +71,43 @@ const Home = () => {
             setCartItems(cartStorageService.getCartItems());
         }
     }, [cartItems, isUpdateCart]);
+
+    useEffect(() => {
+        getProduct().then((data) => {
+            console.log(data, 'data list');
+            if (data && data?.length) {
+                const allproductTypes = [];
+                const allProduct = [];
+
+                data.forEach((data) => {
+                    const item = {
+                        description: data.description,
+                        imgUrl: data.imgUrl,
+                        price: data.price,
+                        productCategory: data.productCategory,
+                        id: data.productID,
+                        name: data.productName,
+                        isStockAvailable: data.quantity > 0,
+                        availableStock: data.quantity ?? 0,
+                    };
+                    console.log(item, 'data list');
+                    // put current item
+                    allProduct.push(item);
+                    // save cat
+                    console.log(allproductTypes.find((c_type) => c_type === item.productCategory));
+                    if (!allproductTypes.find((c_type) => c_type === item.productCategory)) {
+                        allproductTypes.push(item.productCategory);
+                    }
+                });
+                setProducts(allProduct);
+                setProductsTypes(allproductTypes);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log(products, 'PPPPPP', productsTypes, 'ttt');
+    }, [products, productsTypes]);
 
     const GridItemList = (items) => {
         return items.map(({ price, name, isStockAvailable, id, availableStock }) => {
@@ -108,19 +148,35 @@ const Home = () => {
                     />
                 </Styles.ContentContainer>
             </Styles.HomeImageContainer>
-            <Styles.CategorySection>
-                <Styles.Title>SportsWear</Styles.Title>
-                <Divider margin="18px 0" color="#AAD7D9" />
-                <Styles.GridContainer>{GridItemList(MockList_SW)}</Styles.GridContainer>
-            </Styles.CategorySection>
-            <Styles.CategorySection>
+
+            {products?.length && productsTypes?.length ? (
+                <>
+                    {productsTypes.map((type) => {
+                        const createGridItem = products.filter((item) => item?.productCategory === type);
+                        console.log('chk items', createGridItem);
+                        return (
+                            <Styles.CategorySection>
+                                <Styles.Title>{type}</Styles.Title>
+                                <Divider margin="18px 0" color="#AAD7D9" />
+                                <Styles.GridContainer>{GridItemList(createGridItem)}</Styles.GridContainer>
+                            </Styles.CategorySection>
+                        );
+                    })}
+                </>
+            ) : (
+                <Styles.Nodata>Sorry. No Items Available at the moment</Styles.Nodata>
+            )}
+            <Styles.Chat>
+                <ChatbotWindow />
+            </Styles.Chat>
+            {/* <Styles.CategorySection>
                 <Styles.Title>KidsWear</Styles.Title>
                 <Divider margin="18px 0 40px 0" color="#AAD7D9" />
                 <Styles.GridContainer>{GridItemList(MockList_SW)}</Styles.GridContainer>
                 <Styles.Chat>
                     <ChatbotWindow />
                 </Styles.Chat>
-            </Styles.CategorySection>
+            </Styles.CategorySection> */}
         </div>
     );
 };

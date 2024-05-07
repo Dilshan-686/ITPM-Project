@@ -83,3 +83,8 @@ export const Chat = styled.div`
     padding: 8px;
     border: 4px solid #f8c794;
 `;
+
+export const Nodata = styled.div`
+    margin-top: 60px;
+    font-size: 18px;
+`;
