@@ -60,7 +60,7 @@ const handleShopCardOnClick = (id, price, name, availableStock) => {
 const Home = () => {
     const navigate = useNavigate();
     const [isUpdateCart, setIsUpdateCart] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(cartStorageService.getCartItems() ?? []);
     const [products, setProducts] = useState([]);
     const [productsTypes, setProductsTypes] = useState([]);
 
@@ -117,10 +117,12 @@ const Home = () => {
                         price={price}
                         name={name}
                         isStockAvailable={isStockAvailable}
-                        isActive={cartItems.find((item) => item?.id === id)}
+                        isActive={!isUpdateCart && cartItems.find((item) => item?.id === id)}
                         onClick={() => {
-                            handleShopCardOnClick(id, price, name, availableStock);
-                            setIsUpdateCart(true);
+                            if (authService.authGuard()) {
+                                handleShopCardOnClick(id, price, name, availableStock);
+                                setIsUpdateCart(true);
+                            }
                         }}
                     />
                 </Styles.GridItem>
