@@ -6,3 +6,4 @@ export { default as getPaymentHistory } from './getPaymentHistory';
 export { default as getUser } from './getUser';
 export { default as callUserDangerZone } from './callUserDangerZone';
 export { default as callChatbot } from './chatbot';
+export { default as getProduct } from './getProducts';
