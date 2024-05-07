@@ -4,6 +4,7 @@ import { Button, Divider, ShopCard } from '../../components';
 import { authService, cartStorageService } from '../../shared';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import ChatbotWindow from './ChatBox';
 
 const MockList_SW = [
     { id: '1', price: '66.99', name: 'T-Shirt', isStockAvailable: true, availableStock: 12 },
@@ -88,7 +89,7 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div style={{ position: 'relative' }}>
             <Styles.HomeImageContainer>
                 <Styles.HomeMainImage src={MAIN_IMAGE} height={300} alt="image" />
                 <Styles.ContentContainer>
@@ -116,6 +117,9 @@ const Home = () => {
                 <Styles.Title>KidsWear</Styles.Title>
                 <Divider margin="18px 0 40px 0" color="#AAD7D9" />
                 <Styles.GridContainer>{GridItemList(MockList_SW)}</Styles.GridContainer>
+                <Styles.Chat>
+                    <ChatbotWindow />
+                </Styles.Chat>
             </Styles.CategorySection>
         </div>
     );

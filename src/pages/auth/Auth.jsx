@@ -130,7 +130,7 @@ const Auth = () => {
                         label={isSignIn ? 'Sign in' : 'Sign up'}
                     />
                     <Button
-                        onClick={() => {
+                        onClick={async () => {
                             navigate('/');
                         }}
                         border="#92c7cf"
